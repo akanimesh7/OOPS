@@ -7,16 +7,75 @@ public class Gear {
 	private double cog;
 	private double rimDiameter;
 	private double tyreDiameter;
+	final static int DEAFULT = 1;
 	final static int RIM = 0;
 	final static int TYRE = 1;
 	private double wheels[][];
-
+//	Getters and setters
 	public double[][] getWheels() {
 		return wheels;
 	}
 
+	public double getChainRing() {
+		return chainRing;
+	}
+
+	public void setChainRing(double chainRing) {
+		this.chainRing = chainRing;
+	}
+
+	public double getCog() {
+		return cog;
+	}
+
+	public void setCog(double cog) {
+		this.cog = cog;
+	}
+
 	public void setWheels(double[][] wheels) {
 		this.wheels = wheels;
+	}
+
+	public double getRimDiameter() {
+		return rimDiameter;
+	}
+	
+	public double getRimDiameter(double wheel[]) {
+		return wheel[RIM];
+	}
+
+	public void setRimDiameter(double rimDiameter) {
+		this.rimDiameter = rimDiameter;
+	}
+
+	public double getTyreDiameter() {
+		return tyreDiameter;
+	}
+	
+	public double getTyreDiameter(double wheel[]) {
+		return wheel[TYRE];
+	}
+
+	public void setTyreDiameter(double tyreDiameter) {
+		this.tyreDiameter = tyreDiameter;
+	}
+	
+//	Behaviour Functions
+	
+	private double wheelDiameter(double wheel[]) {
+		return  (getRimDiameter(wheel))+ (2 * getTyreDiameter(wheel));
+	}
+	
+	private double wheelDiameter() {
+		return getRimDiameter() + 2 * getTyreDiameter();
+	}
+
+	private double gearRatio() {
+		return Double.isInfinite(getChainRing() / getCog()) ? Double.POSITIVE_INFINITY : (getChainRing() / getCog());
+	}
+
+	public double gearInches() {
+		return wheelDiameter() * gearRatio();
 	}
 
 	private double[] getDiameters() {
@@ -24,34 +83,27 @@ public class Gear {
 		int noOfEntries = wheelRef.length;
 		double diameters[] = new double[noOfEntries];
 		for (int i = 0; i < noOfEntries; i++) {
-			diameters[i] = wheelRef[i][RIM] + (wheelRef[i][TYRE] * 2);
+			diameters[i] = wheelDiameter(wheelRef[i]);
 		}
 		return diameters;
 	}
-
+	
+	// Constructor
 	public Gear(double[][] wheels) {
 		// rearrange input to match your requirements
 		// if tyre is first column then swap columns here
-		this.wheels = wheels;
+		setChainRing(DEAFULT);
+		setCog(DEAFULT);
+		setRimDiameter(DEAFULT);
+		setTyreDiameter(DEAFULT);
+		setWheels(wheels);
 	}
 
 	public Gear(double chainRing, double cog, double rimDiameter, double tyreDiameter) {
-		this.chainRing = chainRing;
-		this.cog = cog;
-		this.rimDiameter = rimDiameter;
-		this.tyreDiameter = tyreDiameter;
-	}
-
-	private double wheelDiameter() {
-		return rimDiameter + 2 * tyreDiameter;
-	}
-
-	private double gearRatio() {
-		return Double.isInfinite(chainRing / cog) ? Double.POSITIVE_INFINITY : (chainRing / cog);
-	}
-
-	public double gearInches() {
-		return wheelDiameter() * gearRatio();
+		setChainRing(chainRing);
+		setCog(cog);
+		setRimDiameter(rimDiameter);
+		setTyreDiameter(tyreDiameter);
 	}
 
 //	public static void main(String[] args) {
