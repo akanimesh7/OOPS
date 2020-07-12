@@ -44,20 +44,20 @@ public class Gear {
 		setCog(cog);
 	}
 	
-	public Gear(Dictionary<String,Integer> passGear) {
+	public Gear(Dictionary<String,Double> passGear) {
 		setChainRing(passGear.get("chainRing")!=null ? passGear.get("chainRing") : DEFAULT );
 		setCog(passGear.get("cog") != null ? passGear.get("cog") : DEFAULT);
 	}
 	
 	public static void main(String[] args) {
-		Dictionary<String, Integer> passGear = new Hashtable(); 
-		passGear.put("cog", 2);
-		passGear.put("chainRing", 1);
+		Dictionary<String, Double> passGear = new Hashtable(); 
+		passGear.put("cog", 2.0);
+		passGear.put("chainRing", 1.0);
 		Gear gear = new Gear(passGear);
-		Dictionary<String, Integer> passWheel = new Hashtable<>() {
+		Dictionary<String, Double> passWheel = new Hashtable<>() {
 			{
-				put("rimDiameter", 3);
-				put("tyreDiameter", 4);
+				put("rimDiameter", 3.0);
+				put("tyreDiameter", 4.0);
 			}
 		};
 		CircularObject wheel = new Wheel(passWheel);

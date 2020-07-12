@@ -24,7 +24,7 @@ public class Wheel implements CircularObject{
 		setTyreDiameter(tyreDiameter);
 	}
 	
-	public Wheel(Dictionary<String,Integer> passWheel) {
+	public Wheel(Dictionary<String,Double> passWheel) {
 		setRimDiameter(passWheel.get("rimDiameter") != null ? passWheel.get("rimDiameter") : DEAFULT);
 		setTyreDiameter(passWheel.get("tyreDiameter") != null? passWheel.get("tyreDiameter"): DEAFULT);
 	}
