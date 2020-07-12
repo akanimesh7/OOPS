@@ -1,6 +1,5 @@
 package Bicycle;
 
-import java.util.Arrays;
 
 public class Gear {
 	private double chainRing;
@@ -29,8 +28,8 @@ public class Gear {
 		return Double.isInfinite(getChainRing() / getCog()) ? Double.POSITIVE_INFINITY : (getChainRing() / getCog());
 	}
 
-	public double gearInches(Wheel wheel) {
-		return wheel.wheelDiameter() * gearRatio();
+	public double gearInches(CircularObject obj) {
+		return obj.diameter() * gearRatio();
 	}
 
 	public Gear(double chainRing, double cog) {
@@ -40,7 +39,7 @@ public class Gear {
 	
 	public static void main(String[] args) {
 		Gear g = new Gear(1,2);
-		Wheel w = new Wheel(3, 4);
+		CircularObject w = new Wheel(3, 4);
 		System.out.println((g.gearInches(w)));
 	}
 }

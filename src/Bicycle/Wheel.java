@@ -1,6 +1,6 @@
 package Bicycle;
 
-public class Wheel {
+public class Wheel implements CircularObject{
 	private double rimDiameter;
 	private double tyreDiameter;
 	final static int DEAFULT = 1;
@@ -41,12 +41,12 @@ public class Wheel {
 		this.tyreDiameter = tyreDiameter;
 	}
 
-	public double wheelDiameter() {
+	public double diameter() {
 		return (getRimDiameter()) + (2 * getTyreDiameter());
 	}
 
 	private double getCircumference() {
-		return Math.PI * wheelDiameter();
+		return Math.PI * diameter();
 	}
 
 }
