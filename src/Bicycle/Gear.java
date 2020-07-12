@@ -6,6 +6,7 @@ import java.util.Hashtable;
 public class Gear {
 	private double chainRing;
 	private double cog;
+	private static int DEFAULT=1;
 //	Getters and setters
 
 	public double getChainRing() {
@@ -44,8 +45,8 @@ public class Gear {
 	}
 	
 	public Gear(Dictionary<String,Integer> passGear) {
-		setChainRing(passGear.get("chainRing"));
-		setCog(passGear.get("cog"));
+		setChainRing(passGear.get("chainRing")!=null ? passGear.get("chainRing") : DEFAULT );
+		setCog(passGear.get("cog") != null ? passGear.get("cog") : DEFAULT);
 	}
 	
 	public static void main(String[] args) {

@@ -2,6 +2,7 @@ package Bicycle;
 
 import java.util.Dictionary;
 
+
 public class Wheel implements CircularObject{
 	private double rimDiameter;
 	private double tyreDiameter;
@@ -24,8 +25,8 @@ public class Wheel implements CircularObject{
 	}
 	
 	public Wheel(Dictionary<String,Integer> passWheel) {
-		setRimDiameter(passWheel.get("rimDiameter"));
-		setTyreDiameter(passWheel.get("tyreDiameter"));
+		setRimDiameter(passWheel.get("rimDiameter") != null ? passWheel.get("rimDiameter") : DEAFULT);
+		setTyreDiameter(passWheel.get("tyreDiameter") != null? passWheel.get("tyreDiameter"): DEAFULT);
 	}
 
 //	public double getRimDiameter(double wheel[]) {
