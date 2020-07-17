@@ -5,8 +5,15 @@ import java.util.Hashtable;
 
 public class Bicycle {
 	private String size;
-	private String tireSize;
-	private String chain;
+	private Parts parts;
+
+	public Parts getParts() {
+		return parts;
+	}
+
+	public void setParts(Parts parts) {
+		this.parts = parts;
+	}
 
 	public String getSize() {
 		return size;
@@ -16,71 +23,50 @@ public class Bicycle {
 		this.size = size;
 	}
 
-	public String getTireSize() {
-		return tireSize;
-	}
-
-	public void setTireSize(String tireSize) {
-		this.tireSize = tireSize;
-	}
-
-	public String getChain() {
-		return chain;
-	}
-
-	public void setChain(String chain) {
-		this.chain = chain;
-	}
 
 	public Bicycle(Hashtable<String, Object> passBicycle) {
 		setSize((String) passBicycle.get("size")); // Assuming size will always be provided
-		setTireSize((String) passBicycle.get("tireSize") != null ? (String) passBicycle.get("tireSize")
-				: defaultTireSize());
-		setChain((String) passBicycle.get("chain") != null ? (String) passBicycle.get("chain") : defaultChain());
-		postInitialise(passBicycle);
+		setParts((Parts) passBicycle.get("Parts"));
 	}
 
 	public Hashtable<String, Object> spares() {
-		Hashtable<String, Object> returnHash = new Hashtable<String, Object>();
-		returnHash.put("chain", getChain());
-		returnHash.put("tireSize", getTireSize());
-		returnHash.putAll(extraSpares());
-		return returnHash;
+		return parts.spares();
 	}
 	
-	public void postInitialise(Hashtable<String, Object> passBicycle) {}
-	
-	public Hashtable<String, Object> extraSpares() {
-		Hashtable<String, Object> hashParent = new Hashtable<String, Object>();
-		hashParent.put("No Spare Recieved","No Spare Recieved");
-		return hashParent;
-	}
-
-	public String defaultTireSize() {
-		return "23";
-	}
-
-	public String defaultChain() {
-		return "10-speed";
-	}
-
 	public static void main(String[] args) {
-// TODO Auto-generated method stub
-		Hashtable<String, Object> passRoadBicycle = new Hashtable<>() {
+		Hashtable<String, Object> roadPassParts = new Hashtable<>() {
 			{
-				put("size", "20.0");
+				put("tireSize","100");
+				put("chain","20-speed");
+				put("tapeColour","voilet");
 			}
 		};
-		RoadBicycle br = new RoadBicycle(passRoadBicycle);
-		System.out.println(br.spares());
-
-		Hashtable<String, Object> passMountainBicycle = new Hashtable<>() {
+		Parts roadParts = new RoadBicycleParts(roadPassParts);
+		Hashtable<String, Object> passBicycle = new Hashtable<>() {
 			{
-				put("size", "20.0");
+				put("size","25.78");
+				put("Parts",roadParts);
 			}
 		};
-		MountainBicycle bm = new MountainBicycle(passMountainBicycle);
-		System.out.println(bm.spares());
+		Bicycle roadBicycle = new Bicycle(passBicycle);
+		System.out.println(roadBicycle.spares());
+		
+		Hashtable<String, Object> mountainPassParts = new Hashtable<>() {
+			{
+				put("tireSize","200");
+				put("chain","40-speed");
+				put("rearShock","FAR");
+			}
+		};
+		Parts mountainParts = new MountainBicycleParts(mountainPassParts );
+		Hashtable<String, Object> passBicycleNew = new Hashtable<>() {
+			{
+				put("size","25.78");
+				put("Parts",mountainParts);
+			}
+		};
+		Bicycle mountainBicycle = new Bicycle(passBicycleNew);
+		System.out.println(mountainBicycle .spares());
 
 	}
 }
