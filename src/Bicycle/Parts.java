@@ -1,55 +1,30 @@
 package Bicycle;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Parts {
-	private String tireSize;
-	private String chain;
+	private ArrayList<Part> parts;
 	
-	public String getTireSize() {
-		return tireSize;
+	public ArrayList<Part> getParts() {
+		return parts;
 	}
 
-	public void setTireSize(String tireSize) {
-		this.tireSize = tireSize;
+	public void setParts(ArrayList<Part> parts) {
+		this.parts = parts;
 	}
 
-	public String getChain() {
-		return chain;
-	}
-
-	public void setChain(String chain) {
-		this.chain = chain;
+	public Parts(ArrayList<Part> partArray) {
+		setParts(partArray);
 	}
 	
-	public Parts(Hashtable<String, Object> passParts) {
-		setTireSize((String) passParts.get("tireSize") != null ? (String) passParts.get("tireSize") : defaultTireSize());
-		setChain((String) passParts.get("chain") != null ? (String) passParts.get("chain") : defaultChain());
-		postInitialise(passParts);
-	}
-	
-	public Hashtable<String, Object> spares() {
-		Hashtable<String, Object> returnHash = new Hashtable<String, Object>();
-		returnHash.put("chain", getChain());
-		returnHash.put("tireSize", getTireSize());
-		returnHash.putAll(extraSpares());
-		return returnHash;
-	}
-	
-	public void postInitialise(Hashtable<String, Object> passBicycle) {}
-	
-	public Hashtable<String, Object> extraSpares() {
-		Hashtable<String, Object> hashParent = new Hashtable<String, Object>();
-//		hashParent.put("No Spare Recieved","No Spare Recieved");
-		return hashParent;
-	}
-
-	public String defaultTireSize() {
-		// Can be also initialised to make it compulsory for subclasses to override
-		return "23";
-	}
-
-	public String defaultChain() {
-		return "10-speed";
+	public ArrayList<Part> spares() {
+		ArrayList<Part> returnArray = new ArrayList<>();
+		for(Part part:parts) {
+			if(part.isSpare()) {
+				returnArray.add(part);
+			}
+		}
+		return returnArray;
 	}
 }
