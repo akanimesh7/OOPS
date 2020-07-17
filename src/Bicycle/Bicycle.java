@@ -4,86 +4,83 @@ import java.util.Hashtable;
 //import java.util.Properties; 
 
 public class Bicycle {
-	private String tapeColour;
-	private double size;
-	private String style;
-	private String frontShock;
-	private String rearShock;
+	private String size;
+	private String tireSize;
+	private String chain;
 
-	public String getStyle() {
-		return style;
-	}
-
-	public void setStyle(String style) {
-		this.style = style;
-	}
-
-	public String getFrontShock() {
-		return frontShock;
-	}
-
-	public void setFrontShock(String frontShock) {
-		this.frontShock = frontShock;
-	}
-
-	public String getRearShock() {
-		return rearShock;
-	}
-
-	public void setRearShock(String rearShock) {
-		this.rearShock = rearShock;
-	}
-
-	public String getTapeColour() {
-		return tapeColour;
-	}
-
-	public void setTapeColour(String tapeColour) {
-		this.tapeColour = tapeColour;
-	}
-
-	public double getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(double size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
-	
-	public Bicycle(Hashtable<String,Object> passBicycle) {
-		setTapeColour((String)passBicycle.get("tapeColour"));
-		setSize((double)passBicycle.get("size"));
-		setStyle((String)passBicycle.get("style"));
-		setRearShock((String)passBicycle.get("rearShock"));
-		setFrontShock((String)passBicycle.get("frontShock"));
+
+	public String getTireSize() {
+		return tireSize;
 	}
-	
-	public Hashtable<String,Object> spares(){
-		Hashtable<String,Object> returnHash= new Hashtable<String,Object>();
-		if(getStyle() == "road") {
-			returnHash.put("chain", "10-speed");
-			returnHash.put("tireSize", "23");
-			returnHash.put("tapeColour", getTapeColour());
-		}else if(getStyle() == "mountain") {
-			returnHash.put("chain", "10-speed");
-			returnHash.put("tireSize", "2.3");
-			returnHash.put("rearShock",getRearShock());
-		}
+
+	public void setTireSize(String tireSize) {
+		this.tireSize = tireSize;
+	}
+
+	public String getChain() {
+		return chain;
+	}
+
+	public void setChain(String chain) {
+		this.chain = chain;
+	}
+
+	public Bicycle(Hashtable<String, Object> passBicycle) {
+		setSize((String) passBicycle.get("size")); // Assuming size will always be provided
+		setTireSize((String) passBicycle.get("tireSize") != null ? (String) passBicycle.get("tireSize")
+				: defaultTireSize());
+		setChain((String) passBicycle.get("chain") != null ? (String) passBicycle.get("chain") : defaultChain());
+		postInitialise(passBicycle);
+	}
+
+	public Hashtable<String, Object> spares() {
+		Hashtable<String, Object> returnHash = new Hashtable<String, Object>();
+		returnHash.put("chain", getChain());
+		returnHash.put("tireSize", getTireSize());
+		returnHash.putAll(extraSpares());
 		return returnHash;
 	}
+	
+	public void postInitialise(Hashtable<String, Object> passBicycle) {}
+	
+	public Hashtable<String, Object> extraSpares() {
+		Hashtable<String, Object> hashParent = new Hashtable<String, Object>();
+		hashParent.put("No Spare Recieved","No Spare Recieved");
+		return hashParent;
+	}
 
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		Hashtable<String, Object> passBicycle = new Hashtable<>() {
-//			{
-//				put("style","mountain");
-//				put("rearShock","Fox");
-//				put("size",20.0D);
-//			}
-//		};
-//		Bicycle b = new Bicycle(passBicycle);
-//		System.out.println(b.spares());
-////		System.out.println(System.getProperty("user.dir"));
-//	}
+	public String defaultTireSize() {
+		return "23";
+	}
 
+	public String defaultChain() {
+		return "10-speed";
+	}
+
+	public static void main(String[] args) {
+// TODO Auto-generated method stub
+		Hashtable<String, Object> passRoadBicycle = new Hashtable<>() {
+			{
+				put("size", "20.0");
+			}
+		};
+		RoadBicycle br = new RoadBicycle(passRoadBicycle);
+		System.out.println(br.spares());
+
+		Hashtable<String, Object> passMountainBicycle = new Hashtable<>() {
+			{
+				put("size", "20.0");
+			}
+		};
+		MountainBicycle bm = new MountainBicycle(passMountainBicycle);
+		System.out.println(bm.spares());
+
+	}
 }
