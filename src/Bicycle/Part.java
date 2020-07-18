@@ -28,6 +28,7 @@ public class Part {
 		setName((String)passPart.get("name"));
 		setDescription((String)passPart.get("description"));
 		setSpare((boolean)passPart.get("isSpare"));
+		setSpare(passPart.get("isSpare") != null ? (boolean)passPart.get("isSpare") : false);
 	}
 	@Override
 	public String toString() {
